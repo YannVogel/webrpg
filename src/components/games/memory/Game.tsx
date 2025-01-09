@@ -4,9 +4,8 @@ import Card from '@/components/games/memory/Card';
 import { Memory } from '@/lib/games/MemoryClass';
 import { useState } from 'react';
 
-const memoryClass = new Memory();
-
 export default function MemoryGame() {
+  const memoryClass = Memory.getInstance();
   const [cards, setCards] = useState(memoryClass.cards);
 
   return (

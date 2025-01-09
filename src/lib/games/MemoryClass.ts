@@ -3,17 +3,19 @@ import { memoryCards } from '@/data-test/games/memory/memoryCards';
 import { shuffle } from '@/lib/utils';
 
 export class Memory {
-  constructor() {
+  private static instance: Memory;
+
+  private constructor() {
     const cards = memoryCards.flatMap((card) => [
       {
         ...card,
-        calculatedId: Math.random().toString(), // TODO
+        calculatedId: `${card.id}_1st_occurrence`,
         flipped: false,
         matched: false,
       },
       {
         ...card,
-        calculatedId: Math.random().toString(), // TODO
+        calculatedId: `${card.id}_2nd_occurrence`,
         flipped: false,
         matched: false,
       },
@@ -26,6 +28,13 @@ export class Memory {
 
   get cards() {
     return this._cards;
+  }
+
+  public static getInstance(): Memory {
+    if (!Memory.instance) {
+      Memory.instance = new Memory();
+    }
+    return Memory.instance;
   }
 
   public flipCard = (selectedCard: Required<MemoryCard>) => {
